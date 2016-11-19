@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "main": "./app/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "1.4.7"
+  }
+}

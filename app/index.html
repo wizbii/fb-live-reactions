@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook Live Reactions</title>
+  <link href="https://fonts.googleapis.com/css?family=Cookie|Lobster" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1 contenteditable>
+      Quelle est la plus belle ville de France ?
+    </h1>
+  </header>
+
+  <main>
+    <article
+      class="reaction"
+      style="background-image: url('http://www.paristaxi.paris/uploads/book/paris-tour-eiffel-at-night.jpg');"
+    >
+      <label class="reaction__upload">
+        <input type="file">
+      </label>
+      <div class="reaction__stats">
+        <img
+          src="emojis/like.png"
+          alt="Like"
+          class="reaction__emoji"
+        >
+        <div class="reaction__counter">
+          <span contenteditable>
+            Paris
+          </span>
+          <div
+            class="reaction__counter-number"
+            data-reaction-counter-like
+          >
+            0
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article
+      class="reaction"
+      style="background-image: url('http://www.rennes.aeroport.fr/sites/rennes.aeroport.fr/files/styles/airport_pop_up/public/gallery/destination/vol-direct-rennes-amsterdam-schipol-billet-avion.jpg?itok=zQiUOwDq');"
+    >
+      <label class="reaction__upload">
+        <input type="file">
+      </label>
+      <div class="reaction__stats">
+        <img
+          src="emojis/love.png"
+          alt="Love"
+          class="reaction__emoji"
+        >
+        <div class="reaction__counter">
+          <span contenteditable>
+            Rennes
+          </span>
+          <div
+            class="reaction__counter-number"
+            data-reaction-counter-love
+          >
+            0
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article
+      class="reaction"
+      style="background-image: url('https://media-cdn.tripadvisor.com/media/photo-s/01/1a/d7/a6/grenoble.jpg');"
+    >
+      <label class="reaction__upload">
+        <input type="file">
+      </label>
+      <div class="reaction__stats">
+        <img
+          src="emojis/shock.png"
+          alt="Shock"
+          class="reaction__emoji"
+        >
+        <div class="reaction__counter">
+          <span contenteditable>
+            Grenoble
+          </span>
+          <div
+            class="reaction__counter-number"
+            data-reaction-counter-wow
+          >
+            0
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article
+      class="reaction"
+      style="background-image: url('http://lyon-sortie.fr/wp-content/uploads/sites/116/2016/09/Lyon.jpg');"
+    >
+      <label class="reaction__upload">
+        <input type="file">
+      </label>
+      <div class="reaction__stats">
+        <img
+          src="emojis/haha.png"
+          alt="Haha"
+          class="reaction__emoji"
+        >
+        <div class="reaction__counter">
+          <span contenteditable>
+            Lyon
+          </span>
+          <div
+            class="reaction__counter-number"
+            data-reaction-counter-haha
+          >
+            0
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article
+      class="reaction"
+      style="background-image: url('http://www.bordeaux-tourisme.com/var/ezwebin_site/storage/images/media/images/bordeaux-gp/rendez-vous-a-bordeaux/684165-7-fre-FR/Rendez-vous-a-Bordeaux_format_1140x522.jpg');"
+    >
+      <label class="reaction__upload">
+        <input type="file">
+      </label>
+      <div class="reaction__stats">
+        <img
+          src="emojis/sad.png"
+          alt="Sad"
+          class="reaction__emoji"
+        >
+        <div class="reaction__counter">
+          <span contenteditable>
+            Bordeaux
+          </span>
+          <div
+            class="reaction__counter-number"
+            data-reaction-counter-sad
+          >
+            0
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article
+      class="reaction"
+      style="background-image: url('http://www.architectes-marseille.info/wp-content/uploads/2016/02/city-marseille.jpg');"
+    >
+      <label class="reaction__upload">
+        <input type="file">
+      </label>
+      <div class="reaction__stats">
+        <img
+          src="emojis/angry.png"
+          alt="Angry"
+          class="reaction__emoji"
+        >
+        <div class="reaction__counter">
+          <span contenteditable>
+            Marseille
+          </span>
+          <div
+            class="reaction__counter-number"
+            data-reaction-counter-angry
+          >
+            0
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
