@@ -119,6 +119,17 @@ main {
   left: -99999999999px;
 }
 
+.modal-container::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
 .modal {
   font-family: sans-serif;
   position: absolute;
@@ -156,7 +167,7 @@ input {
 
 button {
   cursor: pointer;
-  background-color: blue;
+  background-color: #2267e6;
   color: white;
   border: 0;
   padding: 1rem;
@@ -164,13 +175,13 @@ button {
 
 button:focus,
 button:hover {
-  background-color: lightblue;
+  background-color: #407be6;
 }
 
 .link {
   cursor: pointer;
   font-size: 0.9rem;
-  color: blue;
+  color: #2267e6;
   text-decoration: underline;
 }
 

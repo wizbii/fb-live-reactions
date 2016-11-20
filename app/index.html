@@ -13,49 +13,51 @@
     </h1>
   </header>
 
-  <div class="modal">
-    <form>
-      <div class="modal__title">
-        Before getting started, we need to access the live's data on Facebook and need some informations to do so.
-      </div>
-
-      <div class="group">
-        <label>
-          What's your access token?
-          <input type="text" name="accessToken">
-        </label>
-        <span class="link">
-          I don't have one
-        </span>
-      </div>
-
-      <div style="display: none;">
-        <div class="group">
-          <label>
-            What's your app's id?
-            <input type="text" name="appId">
-          </label>
+  <div id="modal" class="modal-container">
+    <div class="modal">
+      <form>
+        <div class="modal__title">
+          Before getting started, we need to access the live's data on Facebook and need some informations to do so.
         </div>
 
         <div class="group">
           <label>
-            What's your app's secret?
-            <input type="text" name="appSecret">
+            What's your access token?
+            <input type="text" name="accessToken" placeholder="123456789|123456789">
+          </label>
+          <span class="link">
+            I don't have one
+          </span>
+        </div>
+
+        <div style="display: none;">
+          <div class="group">
+            <label>
+              What's your app's id?
+              <input type="text" name="appId" placeholder="123456789123456">
+            </label>
+          </div>
+
+          <div class="group">
+            <label>
+              What's your app's secret?
+              <input type="text" name="appSecret" placeholder="1234abcd123a12345a1ab12a123a1a12">
+            </label>
+          </div>
+        </div>
+
+        <div class="group">
+          <label>
+            What's the post's id?
+            <input type="text" name="postId" placeholder="123456789123456_123456789123456">
           </label>
         </div>
-      </div>
 
-      <div class="group">
-        <label>
-          What's the post's id?
-          <input type="text" name="postId">
-        </label>
-      </div>
-
-      <button type="submit">
-        Done
-      </button>
-    </form>
+        <button type="submit">
+          Done
+        </button>
+      </form>
+    </div>
   </div>
 
   <main>

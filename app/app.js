@@ -58,7 +58,7 @@ fileInputs.forEach((input) => {
   });
 });
 
-const modal = document.querySelector('.modal');
+const modal = document.getElementById('modal');
 const form = document.querySelector('form');
 form.addEventListener('click', (event) => {
   if (event.target.classList.contains('link')) {
