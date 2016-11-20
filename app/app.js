@@ -4,6 +4,7 @@ let accessToken;
 let postID;
 const reactions = ['LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY'];
 
+const maxFails = 20;
 let fails = 0;
 function updateCounters() {
   const query = reactions.map((reaction) => {
@@ -13,16 +14,13 @@ function updateCounters() {
   const endpoint = `https://graph.facebook.com/v2.8/?ids=${postID}&fields=${query}&access_token=${accessToken}`;
 
   fetch(endpoint)
+    .then((res) => res.json())
     .then((res) => {
-      if (res.status === 200) {
-        return res.json();
+      if (res.error) {
+        throw new Error(res.error.message);
       }
 
-      throw new Error(res.statusText);
-    })
-    .then((res) => {
       const post = res[postID];
-
       reactions
         .forEach((reaction) => {
           const reactionCounter = document.querySelector(`[data-reaction-counter-${reaction.toLowerCase()}]`);
@@ -34,8 +32,10 @@ function updateCounters() {
     .then(() => {
       fails += 1;
 
-      if (fails < 10) {
+      if (fails < maxFails) {
         setTimeout(updateCounters, 5000);
+      } else {
+        console.error(`Failed to fetch data from Facebook ${maxFails} times, now aborting`);
       }
     })
   ;
