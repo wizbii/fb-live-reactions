@@ -1,10 +1,11 @@
 /* global fetch, FileReader */
 
-const accessToken = prompt('Access Token');
-const postID = prompt('Post ID');
+let accessToken;
+let postID;
 const reactions = ['LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY'];
 
-(function updateCounters() {
+let fails = 0;
+function updateCounters() {
   const query = reactions.map((reaction) => {
     const code = 'reactions_' + reaction.toLowerCase();
     return `reactions.type(${reaction}).limit(0).summary(total_count).as(${code})`;
@@ -30,9 +31,15 @@ const reactions = ['LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY'];
       ;
     })
     .catch((err) => console.error('An error occurred while fetching data from Facebook', err.message))
-    .then(() => setTimeout(updateCounters, 5000))
+    .then(() => {
+      fails += 1;
+
+      if (fails < 10) {
+        setTimeout(updateCounters, 5000);
+      }
+    })
   ;
-})();
+}
 
 const fileInputs = document.querySelectorAll('[type="file"]');
 fileInputs.forEach((input) => {
@@ -50,3 +57,39 @@ fileInputs.forEach((input) => {
     reader.readAsDataURL(file);
   });
 });
+
+const modal = document.querySelector('.modal');
+const form = document.querySelector('form');
+form.addEventListener('click', (event) => {
+  if (event.target.classList.contains('link')) {
+    event.target.parentElement.style.display = 'none';
+    event.target.parentElement.nextElementSibling.style.display = 'block';
+  }
+});
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const values = getFormValues(form, ['accessToken', 'appId', 'appSecret', 'postId']);
+
+  if (values.appId && values.appSecret) {
+    accessToken = `${values.appId}|${values.appSecret}`;
+  } else if (values.accessToken) {
+    accessToken = values.accessToken;
+  }
+
+  if (values.postId) {
+    postID = values.postId;
+  }
+
+  if (accessToken && postID) {
+    modal.style.display = 'none';
+    updateCounters();
+  }
+});
+
+function getFormValues(form, names) {
+  return names.reduce((acc, name) => {
+    acc[name] = form.querySelector(`[name=${name}]`).value;
+    return acc;
+  }, {});
+}

@@ -13,6 +13,51 @@
     </h1>
   </header>
 
+  <div class="modal">
+    <form>
+      <div class="modal__title">
+        Before getting started, we need to access the live's data on Facebook and need some informations to do so.
+      </div>
+
+      <div class="group">
+        <label>
+          What's your access token?
+          <input type="text" name="accessToken">
+        </label>
+        <span class="link">
+          I don't have one
+        </span>
+      </div>
+
+      <div style="display: none;">
+        <div class="group">
+          <label>
+            What's your app's id?
+            <input type="text" name="appId">
+          </label>
+        </div>
+
+        <div class="group">
+          <label>
+            What's your app's secret?
+            <input type="text" name="appSecret">
+          </label>
+        </div>
+      </div>
+
+      <div class="group">
+        <label>
+          What's the post's id?
+          <input type="text" name="postId">
+        </label>
+      </div>
+
+      <button type="submit">
+        Done
+      </button>
+    </form>
+  </div>
+
   <main>
     <article
       class="reaction"

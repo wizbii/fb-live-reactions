@@ -118,3 +118,67 @@ main {
   position: absolute;
   left: -99999999999px;
 }
+
+.modal {
+  font-family: sans-serif;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 2rem;
+  width: 100%;
+  max-width: 50%;
+}
+
+.modal__title {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+label,
+input,
+button {
+  display: block;
+  width: 100%;
+}
+
+input,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+input {
+  padding: 0.25rem;
+}
+
+button {
+  cursor: pointer;
+  background-color: blue;
+  color: white;
+  border: 0;
+  padding: 1rem;
+}
+
+button:focus,
+button:hover {
+  background-color: lightblue;
+}
+
+.link {
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: blue;
+  text-decoration: underline;
+}
+
+.link:focus,
+.link:hover {
+  text-decoration: none;
+}
+
+.group {
+  margin-bottom: 1rem;
+}
