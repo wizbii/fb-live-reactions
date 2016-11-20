@@ -16,3 +16,5 @@ You can use the [online application](https://wizbii.github.io/fb-live-reactions/
 
 The template is built as a "WYSIWYG", meaning you can edit it right from your browser.
 To do so, simply click on the element you want to edit.
+
+![Demo](demo.gif)
