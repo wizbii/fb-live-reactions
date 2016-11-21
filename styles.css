@@ -190,6 +190,14 @@ button:hover {
   text-decoration: none;
 }
 
+.link-download {
+  position: absolute;
+  z-index: 1;
+  right: 2rem;
+  bottom: 2rem;
+  max-width: 20%;
+}
+
 .group {
   margin-bottom: 1rem;
 }

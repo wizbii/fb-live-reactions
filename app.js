@@ -96,6 +96,10 @@ form.addEventListener('submit', function(event) {
     document.body.setAttribute('data-access-token', accessToken);
     document.body.setAttribute('data-post-id', postId);
     modal.style.display = 'none';
+    alert([
+        'You\'re all set.',
+        'You can now simply save this page (File/Save from your browser) and use it as a browser template in OBS.'
+    ].join('\n'));
   }
 });
 
@@ -105,3 +109,9 @@ function getFormValues(form, names) {
     return acc;
   }, {});
 }
+
+var downloadLink = document.querySelector('.link-download');
+downloadLink.addEventListener('click', function() {
+  modal.style.display = 'block';
+  downloadLink.style.display = 'none';
+});
