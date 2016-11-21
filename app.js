@@ -1,49 +1,53 @@
 /* global fetch, FileReader */
 
-var accessToken;
-var postID;
-var reactions = ['LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY'];
+(function(accessToken, postId) {
+  var reactions = ['LIKE', 'LOVE', 'WOW', 'HAHA', 'SAD', 'ANGRY'];
+  var maxFails = 20;
+  var fails = 0;
 
-var maxFails = 20;
-var fails = 0;
-function updateCounters() {
-  var query = reactions.map(function(reaction) {
-    var code = 'reactions_' + reaction.toLowerCase();
-    return 'reactions.type(' + reaction + ').limit(0).summary(total_count).as(' + code + ')';
-  }).join(',');
-  var endpoint = 'https://graph.facebook.com/v2.8/?ids=' + postID + '&fields=' + query + '&access_token=' + accessToken;
+  if (accessToken && postId) {
+    updateCounters();
+  }
 
-  fetch(endpoint)
-    .then(function(res) {
-      return res.json();
-    })
-    .then(function(res) {
-      if (res.error) {
-        throw new Error(res.error.message);
-      }
+  function updateCounters() {
+    var query = reactions.map(function(reaction) {
+      var code = 'reactions_' + reaction.toLowerCase();
+      return 'reactions.type(' + reaction + ').limit(0).summary(total_count).as(' + code + ')';
+    }).join(',');
+    var endpoint = 'https://graph.facebook.com/v2.8/?ids=' + postId + '&fields=' + query + '&access_token=' + accessToken;
 
-      var post = res[postID];
-      reactions
-        .forEach(function(reaction) {
-          var reactionCounter = document.querySelector('[data-reaction-counter-' + reaction.toLowerCase() + ']');
-          reactionCounter.textContent = post['reactions_' + reaction.toLowerCase()].summary.total_count;
-        })
-      ;
-    })
-    .catch(function(err) {
-      console.error('An error occurred while fetching data from Facebook', err.message);
-    })
-    .then(function() {
-      fails += 1;
+    fetch(endpoint)
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(res) {
+        if (res.error) {
+          throw new Error(res.error.message);
+        }
 
-      if (fails < maxFails) {
-        setTimeout(updateCounters, 5000);
-      } else {
-        console.error('Failed to fetch data from Facebook ' + maxFails + ' times, now aborting');
-      }
-    })
-  ;
-}
+        var post = res[postId];
+        reactions
+          .forEach(function(reaction) {
+            var reactionCounter = document.querySelector('[data-reaction-counter-' + reaction.toLowerCase() + ']');
+            reactionCounter.textContent = post['reactions_' + reaction.toLowerCase()].summary.total_count;
+          })
+        ;
+      })
+      .catch(function(err) {
+        console.error('An error occurred while fetching data from Facebook', err.message);
+      })
+      .then(function() {
+        fails += 1;
+
+        if (fails < maxFails) {
+          setTimeout(updateCounters, 5000);
+        } else {
+          console.error('Failed to fetch data from Facebook ' + maxFails + ' times, now aborting');
+        }
+      })
+    ;
+  }
+})(document.body.getAttribute('data-access-token'), document.body.getAttribute('data-post-id'));
 
 var fileInputs = document.querySelectorAll('[type="file"]');
 fileInputs.forEach(function(input) {
@@ -73,6 +77,9 @@ form.addEventListener('click', function(event) {
 
 form.addEventListener('submit', function(event) {
   event.preventDefault();
+
+  var accessToken;
+  var postId;
   var values = getFormValues(form, ['accessToken', 'appId', 'appSecret', 'postId']);
 
   if (values.appId && values.appSecret) {
@@ -82,12 +89,13 @@ form.addEventListener('submit', function(event) {
   }
 
   if (values.postId) {
-    postID = values.postId;
+    postId = values.postId;
   }
 
-  if (accessToken && postID) {
+  if (accessToken && postId) {
+    document.body.setAttribute('data-access-token', accessToken);
+    document.body.setAttribute('data-post-id', postId);
     modal.style.display = 'none';
-    updateCounters();
   }
 });
 
