@@ -147,9 +147,20 @@
       left: 0;
       height: 4vh;
       width: 100%;
+      padding: 0 1vh;
+      text-align: right;
+    }
+
+    .toolbar > button {
+      opacity: 0;
+    }
+
+    .toolbar:hover > button {
+      opacity: 1;
     }
 
     .toolbar-form {
+      text-align: left;
       display: block;
       background-color: white;
       border-radius: 6px;
@@ -168,18 +179,18 @@
     }
 
     .toolbar-form label,
-    .toolbar-form input {
+    input {
       display: block;
       width: 100%;
     }
 
-    .toolbar-form input,
-    .toolbar-form button {
+    input,
+    button {
       font: inherit;
       color: inherit;
     }
 
-    .toolbar-form button {
+    button {
       cursor: pointer;
     }
 
@@ -288,6 +299,10 @@
   </div>
 
   <div class="toolbar">
+    <button type="button">
+      Configure
+    </button>
+
     <form class="toolbar-form" style="display: none;">
       <div class="toolbar-form__group">
         <label>
@@ -387,71 +402,70 @@
       }
     })(document.body.getAttribute('data-access-token'), document.body.getAttribute('data-post-id'));
 
-    document.body.addEventListener('change', function(event) {
-      if (event.target && event.target.getAttribute('type') === 'file') {
+    var filesInputs = Array.prototype.slice.call(document.querySelectorAll('[type=file]'));
+    filesInputs.forEach(function(fileInput) {
+      fileInput.addEventListener('change', function(event) {
         var file = event.target.files[0];
         var reader = new FileReader();
 
         reader.onload = function(loadEvent) {
           var base64 = loadEvent.target.result;
-          event.target.parentElement.parentElement.style.backgroundImage = 'url(\'' + base64 + '\')';
+          fileInput.parentElement.parentElement.style.backgroundImage = 'url(\'' + base64 + '\')';
         };
 
         reader.readAsDataURL(file);
+      });
+    });
+
+    var links = Array.prototype.slice.call(document.querySelectorAll('.link'));
+    links.forEach(function(link) {
+      link.addEventListener('click', function() {
+        link.parentElement.nextElementSibling.style.display = 'block';
+        link.parentElement.style.display = 'none';
+      });
+    });
+
+    var form = document.querySelector('.toolbar-form');
+    form.querySelector('button[type=button]').addEventListener('click', function(event) {
+      event.target.parentElement.style.display = 'none';
+    });
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var values = [
+        'accessToken',
+        'appId',
+        'appSecret',
+        'postId'
+      ].reduce(function(acc, name) {
+        acc[name] = event.target.querySelector('[name=' + name + ']').value;
+        return acc;
+      }, {});
+
+      var accessToken;
+      if (values.appId && values.appSecret) {
+        accessToken = values.appId + '|' + values.appSecret;
+      } else if(values.accessToken) {
+        accessToken = values.accessToken;
+      }
+
+      var postId;
+      if (values.postId) {
+        postId = values.postId;
+      }
+
+      if (accessToken) {
+        document.body.setAttribute('data-access-token', accessToken);
+      }
+
+      if (postId) {
+        document.body.setAttribute('data-post-id', postId);
       }
     });
 
-    document.body.addEventListener('click', function(event) {
-      if (event.target && event.target.classList.contains('link')) {
-        event.target.parentElement.nextElementSibling.style.display = 'block';
-        event.target.parentElement.style.display = 'none';
-      }
-
-      if (event.target && event.target.getAttribute('type') === 'button') {
-        event.target.parentElement.style.display = 'none';
-      }
-    });
-
-    document.body.addEventListener('submit', function(event) {
-      if (event.target && event.target.tagName.toLowerCase() === 'form') {
-        event.preventDefault();
-
-        var values = [
-          'accessToken',
-          'appId',
-          'appSecret',
-          'postId'
-        ].reduce(function(acc, name) {
-          acc[name] = event.target.querySelector('[name=' + name + ']').value;
-          return acc;
-        }, {});
-
-        var accessToken;
-        if (values.appId && values.appSecret) {
-          accessToken = values.appId + '|' + values.appSecret;
-        } else if(values.accessToken) {
-          accessToken = values.accessToken;
-        }
-
-        var postId;
-        if (values.postId) {
-          postId = values.postId;
-        }
-
-        if (accessToken) {
-          document.body.setAttribute('data-access-token', accessToken);
-        }
-
-        if (postId) {
-          document.body.setAttribute('data-post-id', postId);
-        }
-      }
-    });
-
-    document.body.addEventListener('mouseover', function(event) {
-      if (event.target && event.target.classList.contains('toolbar')) {
-        event.target.children[0].style.display = 'block';
-      }
+    document.querySelector('.toolbar > button').addEventListener('click', function() {
+      form.style.display = 'block';
     });
   </script>
 </body>
