@@ -355,8 +355,6 @@
         'SAD',
         'ANGRY'
       ];
-      var maxFails = 20;
-      var fails = 0;
 
       if (accessToken && postId) {
         updateCounters();
@@ -390,13 +388,7 @@
             console.error('An error occurred while fetching data from Facebook', err.message);
           })
           .then(function() {
-            fails += 1;
-
-            if (fails < maxFails) {
-              setTimeout(updateCounters, 5000);
-            } else {
-              console.error('Failed to fetch data from Facebook ' + maxFails + ' times, now aborting');
-            }
+            setTimeout(updateCounters, 10000);
           })
         ;
       }
